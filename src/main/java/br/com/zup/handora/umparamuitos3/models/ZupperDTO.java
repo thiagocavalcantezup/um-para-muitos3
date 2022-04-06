@@ -1,14 +1,10 @@
 package br.com.zup.handora.umparamuitos3.models;
 
-import java.util.Set;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class ZupperDTO {
 
@@ -23,16 +19,10 @@ public class ZupperDTO {
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
 
-    @NotEmpty
-    @Size(min = 2)
-    private Set<EnderecoDTO> enderecos;
-
-    public ZupperDTO(@NotBlank String nome, @NotBlank @Email String email, @NotNull Cargo cargo,
-                     @NotEmpty @Size(min = 2) Set<EnderecoDTO> enderecos) {
+    public ZupperDTO(@NotBlank String nome, @NotBlank @Email String email, @NotNull Cargo cargo) {
         this.nome = nome;
         this.email = email;
         this.cargo = cargo;
-        this.enderecos = enderecos;
     }
 
     public String getNome() {
@@ -45,10 +35,6 @@ public class ZupperDTO {
 
     public Cargo getCargo() {
         return cargo;
-    }
-
-    public Set<EnderecoDTO> getEnderecos() {
-        return enderecos;
     }
 
 }
