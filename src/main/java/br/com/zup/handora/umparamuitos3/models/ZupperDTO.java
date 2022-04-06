@@ -27,10 +27,12 @@ public class ZupperDTO {
     @Size(min = 2)
     private Set<EnderecoDTO> enderecos;
 
-    public ZupperDTO(@NotBlank String nome, @NotBlank @Email String email, Cargo cargo) {
+    public ZupperDTO(@NotBlank String nome, @NotBlank @Email String email, @NotNull Cargo cargo,
+                     @NotEmpty @Size(min = 2) Set<EnderecoDTO> enderecos) {
         this.nome = nome;
         this.email = email;
         this.cargo = cargo;
+        this.enderecos = enderecos;
     }
 
     public String getNome() {
