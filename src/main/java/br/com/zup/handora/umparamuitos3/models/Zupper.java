@@ -3,7 +3,6 @@ package br.com.zup.handora.umparamuitos3.models;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -35,7 +34,7 @@ public class Zupper {
     @Enumerated(EnumType.STRING)
     private Cargo cargo;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany
     @JoinColumn(name = "zupper_id")
     private Set<Endereco> enderecos = new HashSet<>();
 
