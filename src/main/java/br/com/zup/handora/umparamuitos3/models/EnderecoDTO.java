@@ -36,6 +36,10 @@ public class EnderecoDTO {
         this.cep = cep;
     }
 
+    public Endereco toModel() {
+        return new Endereco(logradouro, numero, bairro, complemento, cidade, estado, cep);
+    }
+
     public String getLogradouro() {
         return logradouro;
     }

@@ -25,6 +25,10 @@ public class ZupperDTO {
         this.cargo = cargo;
     }
 
+    public Zupper toModel() {
+        return new Zupper(nome, email, cargo);
+    }
+
     public String getNome() {
         return nome;
     }
