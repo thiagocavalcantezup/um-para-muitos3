@@ -1,6 +1,8 @@
 package br.com.zup.handora.umparamuitos3.models;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class EnderecoDTO {
 
@@ -22,6 +24,8 @@ public class EnderecoDTO {
     private String estado;
 
     @NotBlank
+    @Pattern(regexp = "^[0-9]{5}(-|)[0-9]{3}$")
+    @Size(min = 8, max = 9)
     private String cep;
 
     public EnderecoDTO(@NotBlank String logradouro, @NotBlank String numero,
@@ -37,7 +41,9 @@ public class EnderecoDTO {
     }
 
     public Endereco toModel() {
-        return new Endereco(logradouro, numero, bairro, complemento, cidade, estado, cep);
+        String novoCep = cep.replaceAll("[^0-9]", "");
+
+        return new Endereco(logradouro, numero, bairro, complemento, cidade, estado, novoCep);
     }
 
     public String getLogradouro() {
