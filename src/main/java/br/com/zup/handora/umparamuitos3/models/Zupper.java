@@ -56,4 +56,8 @@ public class Zupper {
         return id;
     }
 
+    public Set<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
 }

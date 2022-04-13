@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,6 +59,31 @@ public class EnderecoController {
                           .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long zupperId, @PathVariable Long id) {
+        Zupper zupper = zupperRepository.findById(zupperId)
+                                        .orElseThrow(
+                                            () -> new ResponseStatusException(
+                                                HttpStatus.NOT_FOUND,
+                                                "Não existe um zupper com o id informado."
+                                            )
+                                        );
+
+        Endereco endereco = new Endereco(id);
+
+        if (zupper.getEnderecos().contains(endereco)) {
+            enderecoRepository.delete(endereco);
+        } else {
+            throw new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Não existe um endereço com o id informado associado ao zupper com o id informado."
+            );
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
 }
