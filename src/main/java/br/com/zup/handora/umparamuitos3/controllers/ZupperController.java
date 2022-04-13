@@ -29,12 +29,10 @@ public class ZupperController {
 
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid ZupperDTO zupperDTO,
-                                       UriComponentsBuilder uriComponentsBuilder) {
+                                       UriComponentsBuilder ucb) {
         Zupper zupper = zupperRepository.save(zupperDTO.toModel());
 
-        URI location = uriComponentsBuilder.path(BASE_URI + "/{id}")
-                                           .buildAndExpand(zupper.getId())
-                                           .toUri();
+        URI location = ucb.path(BASE_URI + "/{id}").buildAndExpand(zupper.getId()).toUri();
 
         return ResponseEntity.created(location).build();
     }

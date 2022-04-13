@@ -40,7 +40,7 @@ public class EnderecoController {
     @PostMapping
     public ResponseEntity<Void> create(@PathVariable Long zupperId,
                                        @RequestBody @Valid EnderecoDTO enderecoDTO,
-                                       UriComponentsBuilder uriComponentsBuilder) {
+                                       UriComponentsBuilder ucb) {
         Zupper zupper = zupperRepository.findById(zupperId)
                                         .orElseThrow(
                                             () -> new ResponseStatusException(
@@ -50,12 +50,12 @@ public class EnderecoController {
                                         );
         Endereco endereco = enderecoRepository.save(enderecoDTO.toModel());
 
-        zupper.getEnderecos().add(endereco);
+        zupper.adicionar(endereco);
         zupperRepository.save(zupper);
 
-        URI location = uriComponentsBuilder.path(
-            ZupperController.BASE_URI + "/{zupperId}" + BASE_URI + "/{id}"
-        ).buildAndExpand(zupper.getId(), endereco.getId()).toUri();
+        URI location = ucb.path(ZupperController.BASE_URI + "/{zupperId}" + BASE_URI + "/{id}")
+                          .buildAndExpand(zupperId, endereco.getId())
+                          .toUri();
 
         return ResponseEntity.created(location).build();
     }

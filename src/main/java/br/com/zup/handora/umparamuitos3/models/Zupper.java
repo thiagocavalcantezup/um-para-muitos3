@@ -3,10 +3,9 @@ package br.com.zup.handora.umparamuitos3.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,10 +30,9 @@ public class Zupper {
     private String email;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private Cargo cargo;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "zupper_id")
     private Set<Endereco> enderecos = new HashSet<>();
 
@@ -50,12 +48,12 @@ public class Zupper {
         this.cargo = cargo;
     }
 
-    public Long getId() {
-        return id;
+    public void adicionar(Endereco endereco) {
+        enderecos.add(endereco);
     }
 
-    public Set<Endereco> getEnderecos() {
-        return enderecos;
+    public Long getId() {
+        return id;
     }
 
 }
